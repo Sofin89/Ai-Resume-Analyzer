@@ -80,30 +80,3 @@ SmartResume is a cutting-edge, full-stack web application designed to help job s
    ┣ 📜 index.js           # Server entry point
    ┗ 📜 package.json
 
-⚙️ Getting StartedFollow these instructions to get a copy of the project up and running on your local machine.PrerequisitesNode.js: v18.0.0 or higherMongoDB: A local instance or a cloud MongoDB Atlas URIGoogle Gemini API Key: Required for the AI analysis featuresInstallationClone the repository:Bashgit clone [https://github.com/your-username/resume-analyzer.git](https://github.com/your-username/resume-analyzer.git)
-cd resume-analyzer
-Install Server Dependencies:Bashcd server
-npm install
-Install Client Dependencies:Bashcd ../client
-npm install
-Environment VariablesCreate a .env file in the /server directory and populate it with the following:Code snippet# Server Config
-PORT=5000
-NODE_ENV=development
-
-# Database
-MONGO_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/smartresume?retryWrites=true&w=majority
-
-# Security
-JWT_SECRET=your_super_secret_jwt_key
-JWT_EXPIRE=30d
-
-# Google Generative AI
-GEMINI_API_KEY=your_gemini_api_key_here
-
-# Email Configuration (Nodemailer)
-EMAIL_USER=your_email@gmail.com
-EMAIL_PASS=your_app_specific_password
-Create a .env file in the /client directory:Code snippetVITE_API_BASE_URL=http://localhost:5000
-Running the ApplicationStart the Backend (from /server):Bashnpm run dev
-Start the Frontend (from /client):Bashnpm run dev
-Your frontend should now be running on http://localhost:5173 and the backend on http://localhost:5000.🔐 Role-Based AccessGuest: Can view the landing page, register, and log in.Authenticated User: Can upload resumes, generate AI analysis reports, customize documents, and manage their profile.Administrator: Has access to the /admin/* routes. Can manage user accounts, update job role datasets, track application analytics, and monitor global resume uploads.🌐 API ReferenceEndpointMethodDescriptionAccess/api/auth/registerPOSTRegister a new userPublic/api/auth/loginPOSTAuthenticate user & get tokenPublic/api/users/profileGET/PUTGet or update user profilePrivate/api/resume/uploadPOSTUpload and parse PDF resumePrivate/api/customize-resumePOSTGenerate tailored resumePrivate/api/admin/analyticsGETFetch platform usage statsAdmin🤝 ContributingContributions, issues, and feature requests are welcome!Fork the ProjectCreate your Feature Branch (git checkout -b feature/AmazingFeature)Commit your Changes (git commit -m 'Add some AmazingFeature')Push to the Branch (git push origin feature/AmazingFeature)Open a Pull Request📄 LicenseThis project is licensed under the ISC License.
