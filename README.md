@@ -79,9 +79,10 @@ SmartResume is a cutting-edge, full-stack web application designed to help job s
    ┣ 📂 utils              # AI connection, PDF processing, and Email helpers
    ┣ 📜 index.js           # Server entry point
    ┗ 📜 package.json
-Text``
 
-## ⚙️ Getting Started
+text``
+
+### ⚙️ Getting Started
 
 Follow these instructions to get a copy of the project up and running on your local machine.
 
