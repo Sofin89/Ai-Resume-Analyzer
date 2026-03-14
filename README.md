@@ -1,135 +1,109 @@
-SmartResume (AI-Powered Resume Analyzer)
-SmartResume is a full-stack web application designed to help job seekers analyze, optimize, and customize their resumes using artificial intelligence. Built with the MERN stack (MongoDB, Express.js, React, Node.js) and integrated with Google's Generative AI, it provides actionable insights to improve a candidate's chances of landing their desired job roles.
+# 🚀 SmartResume (AI-Powered Resume Analyzer)
 
-🚀 Key Features
-AI Resume Analysis: Leverages Google Generative AI to parse and analyze user resumes against specific job roles, identifying skill gaps and areas for improvement.
+![React](https://img.shields.io/badge/React-19-blue?style=for-the-badge&logo=react)
+![Vite](https://img.shields.io/badge/Vite-7-purple?style=for-the-badge&logo=vite)
+![Node.js](https://img.shields.io/badge/Node.js-Express-green?style=for-the-badge&logo=node.js)
+![MongoDB](https://img.shields.io/badge/MongoDB-Mongoose-success?style=for-the-badge&logo=mongodb)
+![Gemini AI](https://img.shields.io/badge/AI-Google_Generative_AI-orange?style=for-the-badge&logo=google)
 
-Smart Customization: Dynamically tailors and customizes resumes for targeted job applications.
+SmartResume is a cutting-edge, full-stack web application designed to help job seekers optimize their resumes using Artificial Intelligence. By leveraging Google's Generative AI, this platform analyzes user resumes against target job roles, identifies skill gaps, and dynamically customizes resumes to increase application success rates.
 
-Role-Based Access Control: * Users: Can upload resumes, view analysis reports, customize resumes, and manage their profiles.
+---
 
-Admins: Have access to a comprehensive dashboard to manage users, job roles, system settings, view analytics, and oversee platform activity.
+## 📑 Table of Contents
 
-Secure Authentication: Full authentication flow including Registration, Login, Forgot Password, and Reset Password using JWT and bcrypt.
+- [✨ Features](#-features)
+- [🛠️ Tech Stack](#️-tech-stack)
+- [📁 Project Structure](#-project-structure)
+- [⚙️ Getting Started](#️-getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Environment Variables](#environment-variables)
+- [🔐 Role-Based Access](#-role-based-access)
+- [🌐 API Reference](#-api-reference)
+- [🤝 Contributing](#-contributing)
+- [📄 License](#-license)
 
-PDF Processing: Built-in support for reading uploaded PDF resumes and generating new, formatted PDFs.
+---
 
-Interactive UI: A responsive, modern frontend featuring animations (Framer Motion), charts (Recharts), and clean styling (Tailwind CSS).
+## ✨ Features
 
-💻 Tech Stack
-Frontend (/client)
-Framework: React 19 powered by Vite
+* **🤖 AI-Driven Analysis:** Deep parsing of PDF resumes using Google Gemini AI to compare candidate skills against specific job descriptions.
+* **🎯 Smart Customization:** Automatically tailor your resume content, generate improved bullet points, and create a targeted ATS-friendly PDF.
+* **📊 Visual Skill Gap Roadmaps:** Interactive radar charts (via Recharts) that visualize candidate strengths and areas for improvement.
+* **🔐 Secure Authentication:** Robust JWT-based authentication system with bcrypt password hashing and Nodemailer for password recovery.
+* **🛡️ Admin Dashboard:** Comprehensive controls for administrators to manage users, configure job roles, view system analytics, and review platform usage.
+* **📄 Advanced Document Processing:** Built-in tools (`pdfjs-dist` & `pdfkit`) to seamlessly extract text from uploaded PDFs and generate new customized documents.
+* **✨ Modern UI/UX:** Fully responsive, animated interface built with Tailwind CSS and Framer Motion.
 
-Routing: React Router DOM (v6)
+---
 
-Styling: Tailwind CSS (with Forms and Typography plugins)
+## 🛠️ Tech Stack
 
-Animations: Framer Motion
+### Frontend Client
+* **Core:** React 19, Vite, React Router DOM v6
+* **Styling & Animation:** Tailwind CSS, Framer Motion
+* **Data Visualization:** Recharts
+* **State & Fetching:** React Context, Axios
+* **Alerts:** React Toastify, React Hot Toast
 
-Data Visualization: Recharts
+### Backend Server
+* **Core:** Node.js, Express.js (v5.x)
+* **Database:** MongoDB, Mongoose (v9.x)
+* **AI Integration:** `@google/generative-ai`
+* **Security:** JSON Web Tokens (JWT), bcrypt
+* **File Processing:** Multer, `pdfjs-dist`, `canvas`, `pdfkit`
+* **Mailing:** Nodemailer
 
-HTTP Client: Axios
+---
 
-Notifications: React Toastify & React Hot Toast
+## 📁 Project Structure
 
-Backend (/server)
-Environment: Node.js & Express.js
+```text
+📦 resumeAnalyzer
+ ┣ 📂 client                 # Frontend React application
+ ┃ ┣ 📂 src
+ ┃ ┃ ┣ 📂 assets           # Images, SVGs, and static files
+ ┃ ┃ ┣ 📂 components       # Reusable UI (Charts, Layouts, ProtectedRoutes)
+ ┃ ┃ ┣ 📂 context          # Auth and Theme context providers
+ ┃ ┃ ┣ 📂 pages            # Application views (Home, Analyze, Admin Dashboard)
+ ┃ ┃ ┗ 📜 main.jsx         # React DOM entry point
+ ┃ ┣ 📜 package.json
+ ┃ ┗ 📜 vite.config.js
+ ┗ 📂 server                 # Backend Node/Express application
+   ┣ 📂 config             # Database connection setup
+   ┣ 📂 controllers        # Business logic for routes
+   ┣ 📂 middleware         # Auth, error handling, and validation
+   ┣ 📂 models             # MongoDB schemas
+   ┣ 📂 routes             # Express API endpoints
+   ┣ 📂 utils              # AI connection, PDF processing, and Email helpers
+   ┣ 📜 index.js           # Server entry point
+   ┗ 📜 package.json
 
-Database: MongoDB via Mongoose
-
-AI Integration: @google/generative-ai (Gemini API)
-
-Authentication: JSON Web Tokens (JWT) & bcrypt/bcryptjs
-
-File Handling: Multer (for uploads)
-
-PDF Utilities: pdfjs-dist (parsing) & pdfkit (generation)
-
-Email Services: Nodemailer (for password resets and notifications)
-
-📂 Project Structure
-Plaintext
-resumeAnalyzer/
-├── client/                 # React Frontend
-│   ├── src/
-│   │   ├── components/     # Reusable UI components (ProtectedRoute, AdminRoute, etc.)
-│   │   ├── context/        # React Context (Auth, Theme)
-│   │   ├── pages/          # Page components (Home, Analyze, Customize, Auth pages)
-│   │   │   └── admin/      # Admin dashboard pages (Analytics, Users, Job Roles)
-│   │   ├── App.jsx         # Main application routing
-│   │   └── main.jsx        # React entry point
-│   ├── package.json
-│   └── vite.config.js
-└── server/                 # Node.js/Express Backend
-    ├── config/             # Database connection (db.js)
-    ├── controllers/        # Route logic (Auth, User, Resume, Admin)
-    ├── middleware/         # Auth, Error, and Validation middleware
-    ├── models/             # Mongoose schemas (User, Resume, JobRole)
-    ├── routes/             # Express API routes
-    ├── utils/              # Helper functions (OpenAI/Gemini, PDF tools, Email)
-    ├── index.js            # Express server entry point
-    └── package.json
-🛠️ Installation & Setup
-Prerequisites
-Node.js (v18+ recommended)
-
-MongoDB (Local instance or MongoDB Atlas URI)
-
-Google Gemini API Key
-
-1. Clone the Repository
-Bash
-git clone <your-repo-url>
-cd resumeAnalyzer10
-2. Backend Setup
-Navigate to the server directory, install dependencies, and start the development server.
-
-Bash
-cd server
+⚙️ Getting StartedFollow these instructions to get a copy of the project up and running on your local machine.PrerequisitesNode.js: v18.0.0 or higherMongoDB: A local instance or a cloud MongoDB Atlas URIGoogle Gemini API Key: Required for the AI analysis featuresInstallationClone the repository:Bashgit clone [https://github.com/your-username/resume-analyzer.git](https://github.com/your-username/resume-analyzer.git)
+cd resume-analyzer
+Install Server Dependencies:Bashcd server
 npm install
-Create a .env file in the server directory and configure the following variables:
-
-Code snippet
+Install Client Dependencies:Bashcd ../client
+npm install
+Environment VariablesCreate a .env file in the /server directory and populate it with the following:Code snippet# Server Config
 PORT=5000
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret_key
-GEMINI_API_KEY=your_google_generative_ai_key
-# Email configurations for Nodemailer
-EMAIL_USER=your_email@example.com
-EMAIL_PASS=your_email_app_password
-Start the backend server:
+NODE_ENV=development
 
-Bash
-npm run dev
-The server will run on http://localhost:5000.
+# Database
+MONGO_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/smartresume?retryWrites=true&w=majority
 
-3. Frontend Setup
-Open a new terminal, navigate to the client directory, install dependencies, and start the Vite development server.
+# Security
+JWT_SECRET=your_super_secret_jwt_key
+JWT_EXPIRE=30d
 
-Bash
-cd client
-npm install
-Create a .env file in the client directory (if you need to specify the API base URL):
+# Google Generative AI
+GEMINI_API_KEY=your_gemini_api_key_here
 
-Code snippet
-VITE_API_URL=http://localhost:5000
-Start the frontend application:
-
-Bash
-npm run dev
-The application will be accessible via the localhost port provided by Vite.
-
-🔒 API Endpoints Overview
-The backend exposes several modular API routes handling different domain logic:
-
-/api/auth - Registration, login, password recovery.
-
-/api/users - Profile management.
-
-/api/resume - Uploading and analyzing resumes.
-
-/api/customize-resume - Generating tailored resume content.
-
-/api/job-roles - Fetching target job criteria.
-
-/api/admin - Protected routes for dashboard analytics and management.
+# Email Configuration (Nodemailer)
+EMAIL_USER=your_email@gmail.com
+EMAIL_PASS=your_app_specific_password
+Create a .env file in the /client directory:Code snippetVITE_API_BASE_URL=http://localhost:5000
+Running the ApplicationStart the Backend (from /server):Bashnpm run dev
+Start the Frontend (from /client):Bashnpm run dev
+Your frontend should now be running on http://localhost:5173 and the backend on http://localhost:5000.🔐 Role-Based AccessGuest: Can view the landing page, register, and log in.Authenticated User: Can upload resumes, generate AI analysis reports, customize documents, and manage their profile.Administrator: Has access to the /admin/* routes. Can manage user accounts, update job role datasets, track application analytics, and monitor global resume uploads.🌐 API ReferenceEndpointMethodDescriptionAccess/api/auth/registerPOSTRegister a new userPublic/api/auth/loginPOSTAuthenticate user & get tokenPublic/api/users/profileGET/PUTGet or update user profilePrivate/api/resume/uploadPOSTUpload and parse PDF resumePrivate/api/customize-resumePOSTGenerate tailored resumePrivate/api/admin/analyticsGETFetch platform usage statsAdmin🤝 ContributingContributions, issues, and feature requests are welcome!Fork the ProjectCreate your Feature Branch (git checkout -b feature/AmazingFeature)Commit your Changes (git commit -m 'Add some AmazingFeature')Push to the Branch (git push origin feature/AmazingFeature)Open a Pull Request📄 LicenseThis project is licensed under the ISC License.
