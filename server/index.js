@@ -85,40 +85,51 @@ const PORT = process.env.PORT || 5000;
 connectDB();
 
 //////////////////////////////
-// MIDDLEWARE
+// MIDDLEWARE & CORS
 //////////////////////////////
 
-app.use(express.json());
-
-//////////////////////////////
-// CORS CONFIGURATION
-//////////////////////////////
+// 1. Logging middleware (Before CORS to see all requests)
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url} - Origin: ${req.headers.origin || 'No Origin'}`);
+  next();
+});
 
 const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:5174",
   "http://localhost:3000",
   "https://ai-resume-analyzer.vercel.app",
-  "https://ai-resume-analyzer-opal-two.vercel.app"
-];
+  "https://ai-resume-analyzer-opal-two.vercel.app",
+  process.env.CORS_ORIGIN
+].filter(Boolean);
 
 const corsOptions = {
   origin: function (origin, callback) {
     // allow requests with no origin (mobile apps / postman)
     if (!origin) return callback(null, true);
 
-    if (allowedOrigins.includes(origin) || origin.startsWith('http://localhost:')) {
+    const isAllowed = allowedOrigins.some(allowed => origin === allowed || (allowed && origin.startsWith(allowed))) || origin.startsWith('http://localhost:');
+    
+    if (isAllowed) {
       return callback(null, true);
     }
 
+    console.log(`CORS Blocked for origin: ${origin}`);
     return callback(new Error("Not allowed by CORS"));
   },
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"]
+  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept"],
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
+// Apply CORS to all routes
 app.use(cors(corsOptions));
+
+// Handle preflight requests explicitly
+app.options("*", cors(corsOptions));
+
+app.use(express.json());
 
 //////////////////////////////
 // ROUTES
