@@ -108,7 +108,14 @@ const corsOptions = {
     // allow requests with no origin (mobile apps / postman)
     if (!origin) return callback(null, true);
 
-    const isAllowed = allowedOrigins.some(allowed => origin === allowed || (allowed && origin.startsWith(allowed))) || origin.startsWith('http://localhost:');
+    // Normalize origin and allowedOrigins by removing trailing slashes for robust matching
+    const normalizedOrigin = origin.replace(/\/$/, "");
+    
+    const isAllowed = allowedOrigins.some(allowed => {
+      if (!allowed) return false;
+      const normalizedAllowed = allowed.replace(/\/$/, "");
+      return normalizedOrigin === normalizedAllowed || normalizedOrigin.startsWith(normalizedAllowed);
+    }) || normalizedOrigin.startsWith('http://localhost:');
     
     if (isAllowed) {
       return callback(null, true);
