@@ -266,7 +266,10 @@ ${resumeText}
     return parsedResponse;
 
   } catch (error) {
-    console.error("❌ AI Review Error / JSON parsing failed:", error);
+    console.error("❌ getAIReview ERROR:", error);
+    if (error.message) console.error("Error Message:", error.message);
+    if (error.stack) console.error("Error Stack:", error.stack);
+    
     return {
       targetJobRole: targetJobRole || "Analysis failed",
       resumeType: "Unknown",
@@ -279,8 +282,8 @@ ${resumeText}
         formatting: 0,
         impactWords: 0
       },
-      strengthAreas: ["AI response was truncated or failed. Try again."],
-      skillGaps: ["Please try the analysis again."],
+      strengthAreas: [`AI request failed: ${error.message || "Unknown error"}`],
+      skillGaps: ["Please check server logs for detailed AI error."],
       improvementRoadmap: [],
       resumeImprovements: [],
       keywordsToAdd: [],
@@ -369,7 +372,9 @@ ${promptContext}
       return JSON.parse(repaired);
     }
   } catch (error) {
-    console.error("❌ Skill Gap Analysis error:", error);
+    console.error("❌ getSkillGapAnalysis ERROR:", error);
+    if (error.message) console.error("Error Message:", error.message);
+
     return {
       targetJobRole: targetJobRole || "Analysis failed",
       extractedSkills: [],
@@ -379,8 +384,8 @@ ${promptContext}
       partialSkills: [],
       jobReadinessScore: 0,
       improvementRoadmap: [],
-      strengthAreas: ["Analysis failed - please try again"],
-      recommendations: ["There was an error in analysis. Please try uploading again."]
+      strengthAreas: [`Analysis failed: ${error.message || "Unknown error"}`],
+      recommendations: ["Please check backend logs for AI provider error details."]
     };
   }
 };
