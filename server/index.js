@@ -85,58 +85,71 @@ const PORT = process.env.PORT || 5000;
 connectDB();
 
 //////////////////////////////
-// MIDDLEWARE & CORS
+// ROBUST MANUAL CORS (Top Priority)
 //////////////////////////////
 
-// 1. Logging middleware (Before CORS to see all requests)
 app.use((req, res, next) => {
-  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url} - Origin: ${req.headers.origin || 'No Origin'}`);
+  const origin = req.headers.origin;
+  const allowedOrigins = [
+    "http://localhost:5173",
+    "http://localhost:5174",
+    "http://localhost:3000",
+    "https://ai-resume-analyzer.vercel.app",
+    "https://ai-resume-analyzer-opal-two.vercel.app",
+    process.env.CORS_ORIGIN
+  ].map(o => o?.replace(/\/$/, "").toLowerCase().trim()).filter(Boolean);
+
+  const normalizedOrigin = origin?.replace(/\/$/, "").toLowerCase().trim();
+
+  // Logging for production debugging
+  console.log(`[CORS Check] Method: ${req.method} | URL: ${req.url} | Origin: ${origin}`);
+
+  if (normalizedOrigin && (allowedOrigins.includes(normalizedOrigin) || normalizedOrigin.startsWith('http://localhost:'))) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+  } else if (!origin) {
+    // Non-browser requests
+    res.setHeader("Access-Control-Allow-Origin", "*");
+  }
+
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With, Accept");
+
+  // Handle Preflight OPTIONS request
+  if (req.method === "OPTIONS") {
+    console.log(`[CORS Preflight] Handled for origin: ${origin}`);
+    return res.status(200).end();
+  }
+
   next();
 });
 
-const allowedOrigins = [
-  "http://localhost:5173",
-  "http://localhost:5174",
-  "http://localhost:3000",
-  "https://ai-resume-analyzer.vercel.app",
-  "https://ai-resume-analyzer-opal-two.vercel.app",
-  process.env.CORS_ORIGIN
-].filter(Boolean);
-
-const corsOptions = {
-  origin: function (origin, callback) {
-    // allow requests with no origin (mobile apps / postman)
-    if (!origin) return callback(null, true);
-
-    // Normalize origin and allowedOrigins by removing trailing slashes for robust matching
-    const normalizedOrigin = origin.replace(/\/$/, "");
-    
-    const isAllowed = allowedOrigins.some(allowed => {
-      if (!allowed) return false;
-      const normalizedAllowed = allowed.replace(/\/$/, "");
-      return normalizedOrigin === normalizedAllowed || normalizedOrigin.startsWith(normalizedAllowed);
-    }) || normalizedOrigin.startsWith('http://localhost:');
-    
-    if (isAllowed) {
-      return callback(null, true);
-    }
-
-    console.log(`CORS Blocked for origin: ${origin}`);
-    return callback(new Error("Not allowed by CORS"));
-  },
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept"],
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-};
-
-// Apply CORS to all routes
-app.use(cors(corsOptions));
-
-// Handle preflight requests explicitly
-app.options("*", cors(corsOptions));
-
 app.use(express.json());
+
+//////////////////////////////
+// DEBUG ROUTES
+//////////////////////////////
+
+app.get("/api/health-check", (req, res) => {
+  res.json({
+    status: "active",
+    time: new Date().toISOString(),
+    message: "🚀 SmartResume Backend is working"
+  });
+});
+
+app.get("/api/debug-config", (req, res) => {
+  res.json({
+    env: {
+      PORT: process.env.PORT,
+      CORS_ORIGIN: process.env.CORS_ORIGIN,
+      NODE_ENV: process.env.NODE_ENV
+    },
+    allowedOriginsExample: [
+      "https://ai-resume-analyzer-opal-two.vercel.app"
+    ]
+  });
+});
 
 //////////////////////////////
 // ROUTES
@@ -144,7 +157,7 @@ app.use(express.json());
 
 // Test Route
 app.get("/", (req, res) => {
-  res.send("🚀 SmartResume Backend is working");
+  res.send("🚀 SmartResume Backend is healthy and active");
 });
 
 // Auth
