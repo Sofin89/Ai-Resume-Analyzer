@@ -24,7 +24,21 @@ const LoginPage = () => {
       login(data);
       navigate("/");
     } catch (err) {
-      setError(err.response?.data?.message || "Login failed. Please try again");
+      console.error("Login component error:", err);
+      let message = "Login failed. Please try again";
+      
+      if (err.response) {
+        // Server responded with an error
+        message = err.response.data?.message || `Server Error: ${err.response.status}`;
+      } else if (err.request) {
+        // Request was made but no response received (likely CORS or network issue)
+        message = "No response from server. This might be a CORS or network issue. Check console for details.";
+      } else {
+        // Something else happened
+        message = err.message;
+      }
+      
+      setError(message);
     } finally {
       setLoading(false);
     }

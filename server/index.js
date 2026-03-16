@@ -97,22 +97,25 @@ app.use(express.json());
 const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:5174",
-  "https://ai-resume-analyzer.vercel.app"
+  "http://localhost:3000",
+  "https://ai-resume-analyzer.vercel.app",
+  "https://ai-resume-analyzer-opal-two.vercel.app"
 ];
 
 const corsOptions = {
   origin: function (origin, callback) {
-
     // allow requests with no origin (mobile apps / postman)
     if (!origin) return callback(null, true);
 
-    if (allowedOrigins.includes(origin)) {
+    if (allowedOrigins.includes(origin) || origin.startsWith('http://localhost:')) {
       return callback(null, true);
     }
 
     return callback(new Error("Not allowed by CORS"));
   },
-  credentials: true
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 };
 
 app.use(cors(corsOptions));
