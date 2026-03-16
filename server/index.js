@@ -20,7 +20,7 @@ const PORT = process.env.PORT || 5000;
 const corsOptions = {
   origin: function (origin, callback) {
     // Allow any localhost port or no origin (e.g., Postman)
-    if (!origin || origin.startsWith('http://localhost:')) {
+    if (!origin || origin.startsWith("*")) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
