@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import logo from "../assets/logo-premium.png";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -12,13 +13,11 @@ const Footer = () => {
           {/* Brand Section */}
           <div className="md:col-span-1">
             <Link to="/" className="inline-flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
+              <div className="w-10 h-10 overflow-hidden flex items-center justify-center">
+                <img src={logo} alt="SkillSync AI Logo" className="w-full h-full object-contain" />
               </div>
               <span className="text-xl font-bold text-gray-900" style={{ fontFamily: 'Poppins, sans-serif' }}>
-                AI Resume Analyzer
+                SkillSync AI
               </span>
             </Link>
             <p className="text-sm text-gray-600 mb-4">
@@ -83,7 +82,7 @@ const Footer = () => {
         <div className="max-w-7xl mx-auto px-6 lg:px-12 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-sm text-gray-600">
-              © {currentYear} <span className="font-semibold text-gray-900">AI Resume Analyzer</span>. All rights reserved.
+              © {currentYear} <span className="font-semibold text-gray-900">SkillSync AI</span>. All rights reserved.
             </div>
             <div className="flex items-center gap-6 text-sm text-gray-600">
               <span className="flex items-center gap-1">

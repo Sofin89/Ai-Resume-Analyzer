@@ -24,11 +24,11 @@ const AnalyzePage = () => {
             </span>
           </div>
 
-          <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6">
-            <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-              Smart Resume Analyzer
-            </span>
-          </h1>
+              <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6">
+                <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+                  SkillSync AI
+                </span>
+              </h1>
 
           <p className="text-xl text-slate-600 max-w-3xl mx-auto mb-8 leading-relaxed">
             Get instant, data-driven feedback on your resume's strengths and weaknesses.

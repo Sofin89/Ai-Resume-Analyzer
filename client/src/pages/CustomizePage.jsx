@@ -25,7 +25,7 @@ const CustomizePage = () => {
 
           <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6">
             <span className="bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 bg-clip-text text-transparent">
-              Smart Resume Customizer
+              SkillSync AI Customizer
             </span>
           </h1>
 

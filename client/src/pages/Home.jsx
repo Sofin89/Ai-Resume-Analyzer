@@ -13,7 +13,7 @@ const Home = () => {
             {/* Left: Text Content */}
             <div>
               <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight" style={{ fontFamily: 'Poppins, sans-serif' }}>
-                Land Your Dream Job with AI-Powered Resume Analysis
+                Land Your Dream Job with <span className="text-blue-600">SkillSync AI</span>
               </h1>
 
               <p className="text-lg text-gray-600 mb-8 leading-relaxed max-w-lg">
@@ -99,7 +99,7 @@ const Home = () => {
               </h2>
 
               <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                Our AI Resume Analyzer has helped thousands of professionals identify and fix critical resume issues. Get detailed skill gap analysis, ATS optimization tips, and personalized recommendations that actually work.
+                Our SkillSync AI has helped thousands of professionals identify and fix critical resume issues. Get detailed skill gap analysis, ATS optimization tips, and personalized recommendations that actually work.
               </p>
 
               <Link
