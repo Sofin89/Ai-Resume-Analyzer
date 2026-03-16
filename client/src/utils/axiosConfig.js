@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'https://ai-resume-analyzer-id8q.onrender.com',
+  baseURL:  'https://ai-resume-analyzer-id8q.onrender.com' || import.meta.env.VITE_API_URL ,
   timeout: 30000,
   headers: {
     'Content-Type': 'application/json',
